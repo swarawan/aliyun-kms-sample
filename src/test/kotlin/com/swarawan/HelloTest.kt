@@ -1,0 +1,8 @@
+package com.swarawan
+
+import org.junit.Test
+import kotlin.test.assertEquals
+
+class HelloTest {
+
+}
