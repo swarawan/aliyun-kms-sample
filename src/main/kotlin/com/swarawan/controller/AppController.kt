@@ -55,24 +55,21 @@ class AppController {
 	 */
 
 	private fun doFindAllKeys() {
-		println("======= FINDING YOUR KEYS =======")
 		try {
 			val response: ListKeysResponse = service.findAllKeys()
 			println("REQUEST ID : ${response.requestId}")
 			response.keys.forEachIndexed { index, key ->
 				println("KEY ${index + 1}: ${key.keyId}")
 			}
-			println("======= COMPLETED =======")
 		} catch (ex: ClientException) {
-			println("======= FAILED =======")
 			printError(ex)
 		} finally {
+			println("======================================================")
 			runApp()
 		}
 	}
 
 	private fun doFindKeyDetails() {
-		println("======= DESCRIBE KEY IN PROGRESS =======")
 		print("Your key: ")
 		val keyId = scanner.next()
 		if (keyId.isNullOrEmpty()) {
@@ -85,11 +82,10 @@ class AppController {
 			println("DESCRIPTION : ${response.keyMetadata.description}")
 			println("STATE : ${response.keyMetadata.keyState}")
 			println("USAGE : ${response.keyMetadata.keyUsage}")
-			println("======= COMPLETED =======")
 		} catch (ex: ClientException) {
-			println("======= FAILED =======")
 			printError(ex)
 		} finally {
+			println("======================================================")
 			runApp()
 		}
 	}
@@ -107,17 +103,16 @@ class AppController {
 			terminateApp("cannot proceed empty keyId")
 		}
 
-		println("======= ENCRYPTION IN PROGRESS =======")
 		try {
 			val response: EncryptResponse = service.doEncrypt(plainText, keyId)
 			println("REQUEST ID : ${response.requestId}")
-			println("PLAIN : ${response.keyId}")
+			println("PLAIN : $plainText")
 			println("CIPHER : ${response.ciphertextBlob}")
-			println("======= ENCRYPTION DONE =======")
 		} catch (ex: ClientException) {
 			println("======= ENCRYPTION FAILED =======")
 			printError(ex)
 		} finally {
+			println("======================================================")
 			runApp()
 		}
 	}
@@ -129,17 +124,16 @@ class AppController {
 			terminateApp("cannot proceed empty value")
 		}
 
-		println("======= DECRYPTION IN PROGRESS =======")
 		try {
 			val response: DecryptResponse = service.doDecrypt(cipherText)
 			println("REQUEST ID : ${response.requestId}")
 			println("CIPHER : ${response.keyId}")
 			println("PLAIN : ${response.plaintext}")
-			println("======= DECRYPTION DONE =======")
 		} catch (ex: ClientException) {
 			println("======= DECRYPTION FAILED =======")
 			printError(ex)
 		} finally {
+			println("======================================================")
 			runApp()
 		}
 	}
